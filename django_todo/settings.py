@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-$yn0370l*th9g#hpangz@4_6=e)wa)s3c2t^^$_&m!#0jk6t0z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-tm-app-eu-69c475fb77aa.herokuapp.com']
+ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
 
 # Application definition
@@ -84,11 +84,6 @@ WSGI_APPLICATION = 'django-tm-app-eu.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-
-print("DATABASE_URL:", os.environ.get('DATABASE_URL'))
-
-print("Parsed Configuration:", dj_database_url.parse(os.environ.get('DATABASE_URL')))
       
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
