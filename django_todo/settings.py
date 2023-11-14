@@ -85,6 +85,11 @@ WSGI_APPLICATION = 'django-tm-app-eu.wsgi.application'
 #     }
 # }
 
+
+print("DATABASE_URL:", os.environ.get('DATABASE_URL'))
+
+print("Parsed Configuration:", dj_database_url.parse(os.environ.get('DATABASE_URL')))
+      
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
