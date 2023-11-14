@@ -1,0 +1,1 @@
+web: gunicorn django-tm-app-eu.wsgi:application
