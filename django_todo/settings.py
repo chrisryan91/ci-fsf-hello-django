@@ -13,8 +13,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+
+development = os.environ.get('DEVELOPMENT', False)
+
 if os.path.isfile('env.py'):
     import env
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +36,10 @@ SECRET_KEY = 'django-insecure-$yn0370l*th9g#hpangz@4_6=e)wa)s3c2t^^$_&m!#0jk6t0z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get("HEROKU_HOSTNAME"), "django-tm-app-eu-69c475fb77aa.herokuapp.com"]
+if development:
+    ALLOWED_HOST = ["localhost"]
+else:
+    ALLOWED_HOSTS = [os.environ.get("HEROKU_HOSTNAME"), "django-tm-app-eu-69c475fb77aa.herokuapp.com"]
 
 
 # Application definition
@@ -72,22 +82,23 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django-tm-app-eu.wsgi.application'
+WSGI_APPLICATION = 'django_todo.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-      
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-}
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:      
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
 
 
 # Password validation
